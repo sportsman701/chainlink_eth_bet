@@ -1,0 +1,32 @@
+{
+  "name": "chainlink_eth_bet",
+  "description": "The betting system which allows 2 people to speculate on the price of an asset at a desired date.",
+  "version": "0.0.1",
+  "author": "hosokawa-zen",
+  "private": true,
+  "scripts": {
+    "smart-contract:test": "yarn workspace smart-contract test",
+    "smart-contract:compile": "yarn workspace smart-contract compile",
+    "front-end:build": "yarn workspace front-end build",
+    "front-end:start": "yarn workspace front-end start",
+    "front-end:dev": "yarn workspace front-end dev",
+    "front-end:test": "yarn workspace front-end e2e:headless",
+    "test": "yarn smart-contract:test && yarn front-end:test",
+    "build": "yarn smart-contract:compile && yarn front-end:build",
+    "deploy": "yarn workspace smart-contract deploy",
+    "upgrade": "yarn workspace smart-contract upgrade",
+    "start": "yarn front-end:start",
+    "dev": "yarn front-end:dev"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/smart-contract",
+      "**/smart-contract/**",
+      "**/front-end",
+      "**/front-end/**"
+    ]
+  }
+}
