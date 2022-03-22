@@ -18,7 +18,8 @@ describe('2. Front End', () => {
     })
 
     it('- should load betting data from the deployed contract', () => {
-        cy.wait(5000);
+        // Wait 8s till loading data
+        cy.wait(10000);
         // Display Current ETH price
         cy.get('.current-eth-price').contains('Current ETH Price: $');
 
