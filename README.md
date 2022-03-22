@@ -17,30 +17,79 @@ In this project, the following data feed are using
 > Aggregator: ETH/USD    
 > Testnet Address: [0x0715A7794a1dc8e42615F059dD6e406A6594651A](https://mumbai.polygonscan.com/address/0x0715A7794a1dc8e42615F059dD6e406A6594651A)
 
+## Implement
+- Smart Contract  
+> Language: Solidity  
+> Framework: Hardhat  
+> Networks: Mumbai(Testnet), Polygon(Mainnet)  
+> Unit Test: Hardhat, Chai
+
+- Front End
+> Language: React  
+> Framework: Nextjs  
+> Network: Mumbai(Testnet)  
+> Unit Test: Cypress  
+
 ## Installation
 ```shell
 yarn install
 ```
 
 ## Usage
-This usage guide is for Mumbai testnet.
 
-### 1. Build
+### 1. Environment variables
+- Create a `.env` file in `pacakges/smart-contract` with its values (refer `.env.sample` file)
+```
+DEPLOYER_PRIVATE_KEY=[YOUR_DEPLOYER_PRIVATE_KEY]
+REPORT_GAS=<true_or_false>
+```
+- Create a `.env` file in `pacakges/front-end` with its values (refer `.env.sample` file)
+```
+REACT_APP_NETWORK_URL=[NETWORK_RPC_URL]
+REACT_APP_CHAIN_ID=[NETWORK_CHAIN_ID]
+```
+
+### 2. Build
+Build Smart Contract and Front End Code
 ```shell
 yarn build
 ```
 
-### 2. Test
+### 3. Test
+Unit Test in Smart Contract and Front End
 ```shell
 yarn test
 ```
 
-### 3. Deploy Contract
+### 4. Deploy Contract
+Deploy Smart Contract on Mumbai testnet and publish the contract`s ABI to the Front End side.
+- Config params in `packages/smart-contract/scripts/params.ts` file for deploying
+```
+export const BETTER_1 = {
+  addr: "0x54cfF4e34155d2A1D74c2968ca62F557a1C2B709",
+  fundAmt: parseWithDecimals("0.05"),
+  flag: false,
+};
+export const BETTER_2 = {
+  addr: "0x76e7BC85008156cFc477d5cc0a6c69616BaD269e",
+  fundAmt: parseWithDecimals("0.05"),
+  flag: true,
+};
+
+// Target Date: 2022:06:01
+export const BETTING_END_TIMESTAMP = getTimestamp(new Date(2022, 5, 1));
+// Target Price: $4000
+export const TP_ETH_PRICE = parseWithDecimals("4000");
+```
+- Run Deploy Command
 ```shell
 yarn deploy
 ```
 
-### 4. Run Front End
+### 5. Run Front End
 ```shell
 yarn start
 ```
+
+![Image](./screenshots/Screenshot%202022-03-23%20012259.jpg)
+
