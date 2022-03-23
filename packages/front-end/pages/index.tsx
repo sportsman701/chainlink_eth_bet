@@ -8,6 +8,7 @@ import useActiveWeb3React from "../hooks/useActiveWeb3React";
 import BetterCard, {EtherBet, parseBetterData} from "../components/BetterCard";
 import {BigNumber} from "@ethersproject/bignumber";
 import {formatWithDecimals} from "../utils/decimal";
+import CountDown from "../components/CountDown";
 
 interface BetData {
     betters: EtherBet[];
@@ -64,7 +65,10 @@ const Home: NextPage = () => {
         console.log('effect');
     }, [account, etherBetContract]);
 
+    const targetDate = betData?.endTp ? (betData.endTp.getFullYear() + ':' + (betData.endTp.getMonth() + 1) + ':' + betData.endTp.getDate()) + ' 00:00:00' : ' - ';
+    const initSecCounter = (betData?.endTp && betData.endTp.getTime() > new Date().getTime()) ? (betData.endTp.getTime() - new Date().getTime()) / 1000 : 0;
 
+    console.log('initSec', initSecCounter);
     return (
         <div className={styles.container}>
             <Head>
@@ -77,12 +81,14 @@ const Home: NextPage = () => {
                     Welcome to ETH Bet
                 </h1>
                 <p className={styles.description}>
-                    Target Date: {betData?.endTp ? (betData.endTp.getFullYear() + ':' + (betData.endTp.getMonth() + 1) + ':' + betData.endTp.getDate()) + ' 00:00:00' : ' - '} <br/>
+                    Target Date: {targetDate} <br/>
                     Target ETH Price: ${betData?.tpPrice ? formatWithDecimals(betData.tpPrice) : ' -'}
                 </p>
                 <h2 className="current-eth-price">
                     Current ETH Price: ${lastETHPrice ? formatWithDecimals(lastETHPrice) : ' - '}
                 </h2>
+
+                <CountDown initSec={initSecCounter}/>
 
                 <Box
                     sx={{
